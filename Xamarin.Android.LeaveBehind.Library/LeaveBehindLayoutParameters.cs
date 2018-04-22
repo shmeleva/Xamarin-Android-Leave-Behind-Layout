@@ -21,9 +21,20 @@ namespace Xamarin.Android.LeaveBehind.Library
         Right = 1
     }
 
+    public enum LeaveBehindLayoutStickiness
+    {
+        None = -2,
+        Self = -1
+    }
+
+
     public class LeaveBehindLayoutParameters : ViewGroup.LayoutParams
     {
         public LeaveBehindLayoutGravity Gravity { get; }
+
+        public int Stickiness { get; }
+        public float StickinessSensitivity { get; }
+
 
         public LeaveBehindLayoutParameters(ViewGroup.LayoutParams source) : base(source)
         {
@@ -34,7 +45,9 @@ namespace Xamarin.Android.LeaveBehind.Library
             var styledAttributes = c.ObtainStyledAttributes(attrs, Resource.Styleable.LeaveBehindLayout);
 
             Gravity = (LeaveBehindLayoutGravity)styledAttributes.GetInt(Resource.Styleable.LeaveBehindLayout_gravity, (int)LeaveBehindLayoutGravity.Center);
-            // ...
+
+            Stickiness = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_stickiness, (int)LeaveBehindLayoutStickiness.Self);
+            StickinessSensitivity = styledAttributes.GetFloat(Resource.Styleable.LeaveBehindLayout_stickiness_sensitivity, 0.9f);
 
             styledAttributes.Recycle();
         }
