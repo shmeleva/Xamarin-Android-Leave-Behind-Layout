@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Android;
-using Android.App;
-using Android.Content;
-using Android.Content.Res;
-using Android.OS;
-using Android.Runtime;
+﻿using Android.Content;
 using Android.Util;
 using Android.Views;
-using Android.Widget;
 
 namespace Xamarin.Android.LeaveBehind.Library
 {
@@ -35,6 +25,8 @@ namespace Xamarin.Android.LeaveBehind.Library
         public int Stickiness { get; }
         public float StickinessSensitivity { get; }
 
+        public bool SwipeEnabled { get; }
+
 
         public LeaveBehindLayoutParameters(ViewGroup.LayoutParams source) : base(source)
         {
@@ -47,7 +39,9 @@ namespace Xamarin.Android.LeaveBehind.Library
             Gravity = (LeaveBehindLayoutGravity)styledAttributes.GetInt(Resource.Styleable.LeaveBehindLayout_gravity, (int)LeaveBehindLayoutGravity.Center);
 
             Stickiness = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_stickiness, (int)LeaveBehindLayoutStickiness.Self);
-            StickinessSensitivity = styledAttributes.GetFloat(Resource.Styleable.LeaveBehindLayout_stickiness_sensitivity, 0.9f);
+            StickinessSensitivity = styledAttributes.GetFloat(Resource.Styleable.LeaveBehindLayout_stickinessSensitivity, 0.9f);
+
+            SwipeEnabled = styledAttributes.GetBoolean(Resource.Styleable.LeaveBehindLayout_swipeEnabled, true);
 
             styledAttributes.Recycle();
         }
