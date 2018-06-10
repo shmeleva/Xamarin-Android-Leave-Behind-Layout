@@ -27,9 +27,10 @@
       android:clickable="true"
       android:focusable="true"
       app:gravity="right"
-      app:bringToClamp="72dp"
+      app:bringToClamp="108dp"
       app:clamp="144dp"
-      app:stickiness="72dp"
+      app:stickingPoint="72dp"
+      app:stickingPointEpsilon="36dp"
       >
 
   </LinearLayout>
@@ -41,7 +42,7 @@
       app:gravity="left"
       app:bringToClamp="0dp"
       app:clamp="0dp"
-      app:stickiness="0dp"
+      app:stickingPoint="0dp"
       >
 
   </FrameLayout>

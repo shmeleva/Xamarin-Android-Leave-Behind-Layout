@@ -35,7 +35,7 @@ namespace Xamarin.Android.LeaveBehind.Library
         public Gravity Gravity { get; }
 
         public int StickingPoint { get; }
-        public float StickingPointEpsilon { get; }
+        public int StickingPointEpsilon { get; }
 
         public int ClampingPoint { get; }
         public int ClampingPointEpsilon { get; }
@@ -53,8 +53,8 @@ namespace Xamarin.Android.LeaveBehind.Library
 
             Gravity = (Gravity)styledAttributes.GetInt(Resource.Styleable.LeaveBehindLayout_gravity, (int)Gravity.Center);
 
-            StickingPoint = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_stickiness, (int)Library.StickingPoint.This);
-            StickingPointEpsilon = styledAttributes.GetFloat(Resource.Styleable.LeaveBehindLayout_stickinessSensitivity, 0.9f);
+            StickingPoint = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_stickingPoint, (int)Library.StickingPoint.This);
+            StickingPointEpsilon = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_stickingPointEpsilon, 0);
 
             ClampingPoint = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_clamp, (int)Library.ClampingPoint.This);
             ClampingPointEpsilon = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_bringToClamp, (int)Library.ClampingPointEpsilon.None);

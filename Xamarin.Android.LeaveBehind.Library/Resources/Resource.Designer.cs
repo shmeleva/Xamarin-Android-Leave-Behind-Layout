@@ -674,10 +674,10 @@ namespace Xamarin.Android.LeaveBehind.Library
 			public static int state_above_anchor = 2130772165;
 			
 			// aapt resource value: 0x7f010100
-			public static int stickiness = 2130772224;
+			public static int stickingPoint = 2130772224;
 			
 			// aapt resource value: 0x7f010101
-			public static int stickinessSensitivity = 2130772225;
+			public static int stickingPointEpsilon = 2130772225;
 			
 			// aapt resource value: 0x7f0100c3
 			public static int subMenuArrow = 2130772163;
@@ -4500,10 +4500,10 @@ namespace Xamarin.Android.LeaveBehind.Library
 			public static int LeaveBehindLayout_rightSwipeEnabled = 7;
 			
 			// aapt resource value: 1
-			public static int LeaveBehindLayout_stickiness = 1;
+			public static int LeaveBehindLayout_stickingPoint = 1;
 			
 			// aapt resource value: 2
-			public static int LeaveBehindLayout_stickinessSensitivity = 2;
+			public static int LeaveBehindLayout_stickingPointEpsilon = 2;
 			
 			// aapt resource value: 5
 			public static int LeaveBehindLayout_swipeEnabled = 5;

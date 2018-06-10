@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Math = System.Math;
-
+using Resources = Android.Content.Res.Resources;
 
 namespace Xamarin.Android.LeaveBehind.Library
 {
@@ -113,29 +113,6 @@ namespace Xamarin.Android.LeaveBehind.Library
                 }
             }
         }
-
-        #region Enumerators
-
-        private IEnumerable<View> Children()
-        {
-            var childCount = ChildCount;
-            for (var i = 0; i < childCount; i++)
-            {
-                yield return GetChildAt(i);
-            }
-        }
-
-        private IEnumerable<IViewParent> Parents()
-        {
-            var parent = Parent;
-            while (parent != null)
-            {
-                yield return parent;
-                parent = parent.Parent;
-            }
-        }
-
-        #endregion
 
 
         protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
@@ -347,6 +324,29 @@ namespace Xamarin.Android.LeaveBehind.Library
             return true;
         }
 
+
+        #region Enumerators
+
+        private IEnumerable<View> Children()
+        {
+            var childCount = ChildCount;
+            for (var i = 0; i < childCount; i++)
+            {
+                yield return GetChildAt(i);
+            }
+        }
+
+        private IEnumerable<IViewParent> Parents()
+        {
+            var parent = Parent;
+            while (parent != null)
+            {
+                yield return parent;
+                parent = parent.Parent;
+            }
+        }
+
+        #endregion
 
 
         #region LeaveBehindLayoutParameters
@@ -624,8 +624,7 @@ namespace Xamarin.Android.LeaveBehind.Library
 
                 if (layoutParameters.TryGetStickingPoint(RightView.Width, out var stickingPoint))
                 {
-                    var amplitude = stickingPoint * layoutParameters.StickingPointEpsilon;
-                    if (IsBetween(-amplitude, amplitude, CenterView.Left - stickingPoint))
+                    if (IsInEpsilonNeighbourhood(CenterView.Left - stickingPoint, layoutParameters.StickingPointEpsilon))
                     {
                         var isClamped = layoutParameters.ClampingPoint == (int)ClampingPoint.This && stickingPoint == LeftView.Width
                             || layoutParameters.ClampingPoint == stickingPoint
@@ -677,8 +676,7 @@ namespace Xamarin.Android.LeaveBehind.Library
 
                 if (layoutParameters.TryGetStickingPoint(RightView.Width, out var stickingPoint))
                 {
-                    float amplitude = stickingPoint * layoutParameters.StickingPointEpsilon;
-                    if (IsBetween(-amplitude, amplitude, CenterView.Right + stickingPoint - ParentWidth))
+                    if (IsInEpsilonNeighbourhood(CenterView.Right + stickingPoint - ParentWidth, layoutParameters.StickingPointEpsilon))
                     {
                         var isClamped = layoutParameters.ClampingPoint == (int)ClampingPoint.This && stickingPoint == RightView.Width
                             || layoutParameters.ClampingPoint == stickingPoint
@@ -696,10 +694,10 @@ namespace Xamarin.Android.LeaveBehind.Library
                     => _leaveBehindLayout.StartScrollAnimation(child, finalLeft, isClamped, isSwipedRight: false);
             }
 
-            private bool IsBetween(float left, float right, float check)
-            {
-                return check >= left && check <= right;
-            }
+
+            private static int PxToDp(int px) => (int)(px / Resources.System.DisplayMetrics.Density);
+
+            private static bool IsInEpsilonNeighbourhood(int value, int epsilon) => value >= -epsilon && value <= epsilon;
         }
     }
 }
