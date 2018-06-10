@@ -615,7 +615,7 @@ namespace Xamarin.Android.LeaveBehind.Library
                     return true;
                 }
 
-                if (dx > 0 && xVelocity >= 0 && layoutParameters.ClampingPointEpsilon != (int)ClampingPointEpsilon.None && LeftView.Right > layoutParameters.ClampingPointEpsilon)
+                if (dx > 0 && xVelocity >= 0 && layoutParameters.ClampingPointEpsilonDefined && LeftView.Right > layoutParameters.ClampingPoint - layoutParameters.ClampingPointEpsilon)
                 {
                     int left = CenterView.Left < 0 ? child.Left - CenterView.Left : ParentWidth;
                     StartScrollAnimation(ClampMoveRight(child, left), isClamped: true);
@@ -667,7 +667,7 @@ namespace Xamarin.Android.LeaveBehind.Library
                     return true;
                 }
 
-                if (dx < 0 && xVelocity <= 0 && layoutParameters.ClampingPointEpsilon != (int)ClampingPointEpsilon.None && RightView.Left + layoutParameters.ClampingPointEpsilon < ParentWidth)
+                if (dx < 0 && xVelocity <= 0 && layoutParameters.ClampingPointEpsilonDefined && RightView.Left + layoutParameters.ClampingPoint - layoutParameters.ClampingPointEpsilon < ParentWidth)
                 {
                     int left = CenterView.Left > 0 ? child.Left - CenterView.Left : -ParentWidth;
                     StartScrollAnimation(ClampMoveLeft(child, left), true);

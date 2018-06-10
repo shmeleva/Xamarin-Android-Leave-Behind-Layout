@@ -244,9 +244,6 @@ namespace Xamarin.Android.LeaveBehind.Library
 			// aapt resource value: 0x7f010069
 			public static int borderlessButtonStyle = 2130772073;
 			
-			// aapt resource value: 0x7f010103
-			public static int bringToClamp = 2130772227;
-			
 			// aapt resource value: 0x7f010066
 			public static int buttonBarButtonStyle = 2130772070;
 			
@@ -287,7 +284,10 @@ namespace Xamarin.Android.LeaveBehind.Library
 			public static int checkedTextViewStyle = 2130772124;
 			
 			// aapt resource value: 0x7f010102
-			public static int clamp = 2130772226;
+			public static int clampingPoint = 2130772226;
+			
+			// aapt resource value: 0x7f010103
+			public static int clampingPointEpsilon = 2130772227;
 			
 			// aapt resource value: 0x7f0100cc
 			public static int closeIcon = 2130772172;
@@ -4484,11 +4484,11 @@ namespace Xamarin.Android.LeaveBehind.Library
 					2130772229,
 					2130772230};
 			
-			// aapt resource value: 4
-			public static int LeaveBehindLayout_bringToClamp = 4;
-			
 			// aapt resource value: 3
-			public static int LeaveBehindLayout_clamp = 3;
+			public static int LeaveBehindLayout_clampingPoint = 3;
+			
+			// aapt resource value: 4
+			public static int LeaveBehindLayout_clampingPointEpsilon = 4;
 			
 			// aapt resource value: 0
 			public static int LeaveBehindLayout_gravity = 0;

@@ -27,8 +27,8 @@
       android:clickable="true"
       android:focusable="true"
       app:gravity="right"
-      app:bringToClamp="108dp"
-      app:clamp="144dp"
+      app:clampingPointEpsilon="12dp"
+      app:clampingPoint="144dp"
       app:stickingPoint="72dp"
       app:stickingPointEpsilon="36dp"
       >
@@ -40,8 +40,8 @@
       android:layout_width="0dp"
       android:layout_height="match_parent"
       app:gravity="left"
-      app:bringToClamp="0dp"
-      app:clamp="0dp"
+      app:clampingPointEpsilon="0dp"
+      app:clampingPoint="0dp"
       app:stickingPoint="0dp"
       >
 

@@ -26,8 +26,8 @@ namespace Xamarin.Android.LeaveBehind.Sample
 		
 		public static void UpdateIdValues()
 		{
-			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.bringToClamp = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.bringToClamp;
-			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.clamp = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.clamp;
+			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.clampingPoint = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.clampingPoint;
+			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.clampingPointEpsilon = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.clampingPointEpsilon;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.font = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.font;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.fontProviderAuthority = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.fontProviderAuthority;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.fontProviderCerts = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.fontProviderCerts;
@@ -40,8 +40,8 @@ namespace Xamarin.Android.LeaveBehind.Sample
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.gravity = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.gravity;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.leftSwipeEnabled = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.leftSwipeEnabled;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.rightSwipeEnabled = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.rightSwipeEnabled;
-			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.stickiness = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.stickiness;
-			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.stickinessSensitivity = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.stickinessSensitivity;
+			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.stickingPoint = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.stickingPoint;
+			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.stickingPointEpsilon = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.stickingPointEpsilon;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.swipeEnabled = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.swipeEnabled;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Boolean.abc_action_bar_embed_tabs = global::Xamarin.Android.LeaveBehind.Sample.Resource.Boolean.abc_action_bar_embed_tabs;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Color.notification_action_color_filter = global::Xamarin.Android.LeaveBehind.Sample.Resource.Color.notification_action_color_filter;
@@ -143,24 +143,24 @@ namespace Xamarin.Android.LeaveBehind.Sample
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.FontFamilyFont_fontStyle = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.FontFamilyFont_fontStyle;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.FontFamilyFont_fontWeight = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.FontFamilyFont_fontWeight;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout;
-			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout_bringToClamp = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout_bringToClamp;
-			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout_clamp = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout_clamp;
+			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout_clampingPoint = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout_clampingPoint;
+			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout_clampingPointEpsilon = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout_clampingPointEpsilon;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout_gravity = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout_gravity;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout_leftSwipeEnabled = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout_leftSwipeEnabled;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout_rightSwipeEnabled = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout_rightSwipeEnabled;
-			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout_stickiness = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout_stickiness;
-			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout_stickinessSensitivity = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout_stickinessSensitivity;
+			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout_stickingPoint = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout_stickingPoint;
+			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout_stickingPointEpsilon = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout_stickingPointEpsilon;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout_swipeEnabled = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout_swipeEnabled;
 		}
 		
 		public partial class Attribute
 		{
 			
-			// aapt resource value: 0x7f01000d
-			public const int bringToClamp = 2130771981;
-			
 			// aapt resource value: 0x7f01000c
-			public const int clamp = 2130771980;
+			public const int clampingPoint = 2130771980;
+			
+			// aapt resource value: 0x7f01000d
+			public const int clampingPointEpsilon = 2130771981;
 			
 			// aapt resource value: 0x7f010007
 			public const int font = 2130771975;
@@ -199,10 +199,10 @@ namespace Xamarin.Android.LeaveBehind.Sample
 			public const int rightSwipeEnabled = 2130771984;
 			
 			// aapt resource value: 0x7f01000a
-			public const int stickiness = 2130771978;
+			public const int stickingPoint = 2130771978;
 			
 			// aapt resource value: 0x7f01000b
-			public const int stickinessSensitivity = 2130771979;
+			public const int stickingPointEpsilon = 2130771979;
 			
 			// aapt resource value: 0x7f01000e
 			public const int swipeEnabled = 2130771982;
@@ -679,11 +679,11 @@ namespace Xamarin.Android.LeaveBehind.Sample
 					2130771983,
 					2130771984};
 			
-			// aapt resource value: 4
-			public const int LeaveBehindLayout_bringToClamp = 4;
-			
 			// aapt resource value: 3
-			public const int LeaveBehindLayout_clamp = 3;
+			public const int LeaveBehindLayout_clampingPoint = 3;
+			
+			// aapt resource value: 4
+			public const int LeaveBehindLayout_clampingPointEpsilon = 4;
 			
 			// aapt resource value: 0
 			public const int LeaveBehindLayout_gravity = 0;
@@ -695,10 +695,10 @@ namespace Xamarin.Android.LeaveBehind.Sample
 			public const int LeaveBehindLayout_rightSwipeEnabled = 7;
 			
 			// aapt resource value: 1
-			public const int LeaveBehindLayout_stickiness = 1;
+			public const int LeaveBehindLayout_stickingPoint = 1;
 			
 			// aapt resource value: 2
-			public const int LeaveBehindLayout_stickinessSensitivity = 2;
+			public const int LeaveBehindLayout_stickingPointEpsilon = 2;
 			
 			// aapt resource value: 5
 			public const int LeaveBehindLayout_swipeEnabled = 5;

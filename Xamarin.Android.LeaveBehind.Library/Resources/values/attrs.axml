@@ -14,12 +14,12 @@
         </attr>
         <attr name="stickingPointEpsilon" format="dimension" />
 
-        <attr name="clamp" format="dimension">
+        <attr name="clampingPoint" format="dimension">
           <enum name="parent" value="-1" />
           <enum name="self" value="-2" />
         </attr>
 
-        <attr name="bringToClamp" format="dimension">
+        <attr name="clampingPointEpsilon" format="dimension">
           <enum name="no" value="-1"/>
         </attr>
 
