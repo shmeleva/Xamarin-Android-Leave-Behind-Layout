@@ -1,43 +1,44 @@
 ﻿using Android.Content;
 using Android.Util;
 using Android.Views;
+using System;
 
 namespace Xamarin.Android.LeaveBehind.Library
 {
-    public enum LeaveBehindLayoutGravity
+    public enum Gravity
     {
         Left = -1,
         Center = 0,
         Right = 1
     }
 
-    public enum LeaveBehindLayoutStickiness
+    public enum StickingPoint
     {
         None = -2,
-        Self = -1
+        This = -1
     }
 
-    public enum LeaveBehindLayoutClamp
+    public enum ClampingPoint
     {
-        Self = -2,
+        This = -2,
         Parent = -1
     }
 
-    public enum LeaveBehindLayoutBringToClamp
+    public enum ClampingPointEpsilon
     {
-        No = -1
+        None = -1
     }
 
 
     public class LeaveBehindLayoutParameters : ViewGroup.LayoutParams
     {
-        public LeaveBehindLayoutGravity Gravity { get; }
+        public Gravity Gravity { get; }
 
-        public int Stickiness { get; }
-        public float StickinessSensitivity { get; }
+        public int StickingPoint { get; }
+        public float StickingPointEpsilon { get; }
 
-        public int Clamp { get; }
-        public int BringToClamp { get; }
+        public int ClampingPoint { get; }
+        public int ClampingPointEpsilon { get; }
 
         //public bool SwipeEnabled { get; }
 
@@ -50,13 +51,13 @@ namespace Xamarin.Android.LeaveBehind.Library
         {
             var styledAttributes = c.ObtainStyledAttributes(attrs, Resource.Styleable.LeaveBehindLayout);
 
-            Gravity = (LeaveBehindLayoutGravity)styledAttributes.GetInt(Resource.Styleable.LeaveBehindLayout_gravity, (int)LeaveBehindLayoutGravity.Center);
+            Gravity = (Gravity)styledAttributes.GetInt(Resource.Styleable.LeaveBehindLayout_gravity, (int)Gravity.Center);
 
-            Stickiness = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_stickiness, (int)LeaveBehindLayoutStickiness.Self);
-            StickinessSensitivity = styledAttributes.GetFloat(Resource.Styleable.LeaveBehindLayout_stickinessSensitivity, 0.9f);
+            StickingPoint = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_stickiness, (int)Library.StickingPoint.This);
+            StickingPointEpsilon = styledAttributes.GetFloat(Resource.Styleable.LeaveBehindLayout_stickinessSensitivity, 0.9f);
 
-            Clamp = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_clamp, (int)LeaveBehindLayoutClamp.Self);
-            BringToClamp = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_bringToClamp, (int)LeaveBehindLayoutBringToClamp.No);
+            ClampingPoint = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_clamp, (int)Library.ClampingPoint.This);
+            ClampingPointEpsilon = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_bringToClamp, (int)Library.ClampingPointEpsilon.None);
 
             //SwipeEnabled = styledAttributes.GetBoolean(Resource.Styleable.LeaveBehindLayout_swipeEnabled, true);
 
@@ -65,6 +66,27 @@ namespace Xamarin.Android.LeaveBehind.Library
 
         public LeaveBehindLayoutParameters(int width, int height) : base(width, height)
         {
+        }
+
+        public bool TryGetStickingPoint(int width, out int stickingPoint)
+        {
+            switch (StickingPoint)
+            {
+                case (int)Library.StickingPoint.None:
+                    stickingPoint = (int)Library.StickingPoint.None;
+                    return false;
+                case (int)Library.StickingPoint.This:
+                    stickingPoint = width;
+                    return true;
+                default:
+                    stickingPoint = StickingPoint;
+                    return true;
+            }
+        }
+
+        public int GetClampingPoint()
+        {
+            throw new NotImplementedException();
         }
     }
 }

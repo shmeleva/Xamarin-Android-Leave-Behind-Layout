@@ -19,342 +19,7 @@ namespace Xamarin.Android.LeaveBehind.Library
 {
     public class SwipeEventArgs : EventArgs
     {
-        public bool MoveRight { get; set; }
-    }
-
-    public class LeaveBehindLayoutDragCallback : ViewDragHelper.Callback
-    {
-        private int initialLeft;
-        private LeaveBehindLayout leaveBehindLayout;
-
-
-        public int Width => leaveBehindLayout.Width;
-
-
-        public LeaveBehindLayoutDragCallback(LeaveBehindLayout leaveBehindLayout)
-        {
-            this.leaveBehindLayout = leaveBehindLayout;
-        }
-
-
-        public override bool TryCaptureView(View child, int pointerId)
-        {
-            initialLeft = child.Left;
-            return true;
-        }
-
-        public override int ClampViewPositionHorizontal(View child, int left, int dx) // +
-            => (dx > 0) ? ClampMoveRight(child, left) : ClampMoveLeft(child, left);
-
-        public override int GetViewHorizontalDragRange(View child) => Width; // +
-
-        public override void OnViewReleased(View releasedChild, float xVelocity, float yVelocity)
-        {
-            int dx = releasedChild.Left - initialLeft;
-            if (dx == 0)
-            {
-                return;
-            }
-
-            var handled = TryHandleViewRelease();
-            if (!handled)
-            {
-                leaveBehindLayout.StartScrollAnimation(releasedChild, releasedChild.Left - leaveBehindLayout.CenterView.Left, false, dx > 0);
-            }
-
-            bool TryHandleViewRelease()
-            {
-                if (dx > 0)
-                {
-                    return xVelocity >= 0
-                        ? OnMoveRightReleased(releasedChild, dx, xVelocity)
-                        : OnMoveLeftReleased(releasedChild, dx, xVelocity);
-                }
-                else
-                {
-                    return xVelocity <= 0
-                        ? OnMoveLeftReleased(releasedChild, dx, xVelocity)
-                        : OnMoveRightReleased(releasedChild, dx, xVelocity);
-                }
-            }
-        }
-
-        private bool LeftViewClampReached(LeaveBehindLayoutParameters leftViewLP) //+
-        {
-            var leftView = leaveBehindLayout.LeftView;
-            if (leftView == null)
-            {
-                return false;
-            }
-
-            switch (leftViewLP.Clamp)
-            {
-                case (int)LeaveBehindLayoutClamp.Parent:
-                    return leftView.Right >= Width;
-                case (int)LeaveBehindLayoutClamp.Self:
-                    return leftView.Right >= leftView.Width;
-                default:
-                    return leftView.Right >= leftViewLP.Clamp;
-            }
-        }
-
-        private bool RightViewClampReached(LeaveBehindLayoutParameters lp) // +
-        {
-            var rightView = leaveBehindLayout.RightView;
-            if (rightView == null)
-            {
-                return false;
-            }
-
-            switch (lp.Clamp)
-            {
-                case (int)LeaveBehindLayoutClamp.Parent:
-                    return rightView.Right <= Width;
-                case (int)LeaveBehindLayoutClamp.Self:
-                    return rightView.Right <= Width; // ???
-                default:
-                    return rightView.Left + lp.Clamp <= Width;
-            }
-        }
-
-        public override void OnViewPositionChanged(View changedView, int left, int top, int dx, int dy)
-        {
-            leaveBehindLayout.OffsetChildren(changedView, dx);
-
-            int stickyBound;
-
-            if (dx > 0) // Right direction.
-            {
-                if (leaveBehindLayout.LeftView != null)
-                {
-                    stickyBound = GetStickyBound(leaveBehindLayout.LeftView);
-                    if (stickyBound != (int)LeaveBehindLayoutStickiness.None)
-                    {
-                        if (leaveBehindLayout.LeftView.Right - stickyBound > 0 && leaveBehindLayout.LeftView.Right - stickyBound - dx <= 0)
-                        {
-                            // !
-                            // leaveBehindLayout.LeftStickyEdgeReached?.Invoke(this, new SwipeEventArgs { MoveRight = true });
-                        }
-                    }
-                }
-
-                if (leaveBehindLayout.RightView != null)
-                {
-                    stickyBound = GetStickyBound(leaveBehindLayout.RightView);
-                    if (stickyBound != (int)LeaveBehindLayoutStickiness.None)
-                    {
-                        if (leaveBehindLayout.RightView.Left + stickyBound > Width && leaveBehindLayout.RightView.Left + stickyBound - dx <= Width)
-                        {
-                            // !
-                            // leaveBehindLayout.RightStickyEdgeReached?.Invoke(this, new SwipeEventArgs { MoveRight = true });
-                        }
-                    }
-                }
-            }
-            else if (dx < 0) // Left direction.
-            {
-                if (leaveBehindLayout.LeftView != null)
-                {
-                    stickyBound = GetStickyBound(leaveBehindLayout.LeftView);
-                    if (stickyBound != (int)LeaveBehindLayoutStickiness.None)
-                    {
-                        if (leaveBehindLayout.LeftView.Right - stickyBound <= 0 && leaveBehindLayout.LeftView.Right - stickyBound - dx > 0)
-                        {
-                            // !
-                            // leaveBehindLayout.LeftStickyEdgeReached?.Invoke(this, new SwipeEventArgs { MoveRight = false });
-                        }
-                    }
-                }
-
-                if (leaveBehindLayout.RightView != null)
-                {
-                    stickyBound = GetStickyBound(leaveBehindLayout.RightView);
-                    if (stickyBound != (int)LeaveBehindLayoutStickiness.None)
-                    {
-                        if (leaveBehindLayout.RightView.Left + stickyBound <= Width && leaveBehindLayout.RightView.Left + stickyBound - dx > Width)
-                        {
-                            // !
-                            // leaveBehindLayout.RightStickyEdgeReached?.Invoke(this, new SwipeEventArgs { MoveRight = false });
-                        }
-                    }
-                }
-            }
-        }
-
-        private int GetStickyBound(View view)
-        {
-            var lp = view.LayoutParameters as LeaveBehindLayoutParameters;
-            if (lp.Stickiness == (int)LeaveBehindLayoutStickiness.None)
-            {
-                return (int)LeaveBehindLayoutStickiness.None;
-            }
-
-            return lp.Stickiness == (int)LeaveBehindLayoutStickiness.Self
-                ? view.Width
-                : lp.Stickiness;
-        }
-
-        private int ClampMoveRight(View child, int left) // +
-        {
-            var leftView = leaveBehindLayout.LeftView;
-            if (leftView == null)
-            {
-                return (child == leaveBehindLayout.CenterView)
-                    ? Math.Min(left, 0)
-                    : Math.Min(left, Width);
-            }
-
-            var lp = child.LayoutParameters as LeaveBehindLayoutParameters;
-            switch (lp.Clamp)
-            {
-                case (int)LeaveBehindLayoutClamp.Parent:
-                    return Math.Min(left, Width + child.Left - leftView.Right);
-                case (int)LeaveBehindLayoutClamp.Self:
-                    return Math.Min(left, child.Left - leftView.Left);
-                default:
-                    return Math.Min(left, child.Left - leftView.Right + lp.Clamp);
-            }
-        }
-
-        private int ClampMoveLeft(View child, int left) // +
-        {
-            var rightView = leaveBehindLayout.RightView;
-            if (rightView == null)
-            {
-                return (child == leaveBehindLayout.CenterView)
-                    ? Math.Max(left, 0)
-                    : Math.Max(left, -child.Width);
-            }
-
-            var lp = child.LayoutParameters as LeaveBehindLayoutParameters;
-            switch (lp.Clamp)
-            {
-                case (int)LeaveBehindLayoutClamp.Parent:
-                    return Math.Max(child.Left - rightView.Left, left);
-                case (int)LeaveBehindLayoutClamp.Self:
-                    return Math.Max(left, Width - rightView.Left + child.Left - rightView.Width);
-                default:
-                    return Math.Max(left, Width - rightView.Left + child.Left - lp.Clamp);
-            }
-
-        }
-
-        private bool OnMoveRightReleased(View child, int dx, float xVelocity)
-        {
-            var centerView = leaveBehindLayout.CenterView;
-            var leftView = leaveBehindLayout.LeftView;
-
-            if (xVelocity > leaveBehindLayout.VelocityThreshold)
-            {
-                var left = (centerView.Left < 0) ? child.Left - centerView.Left : Width;
-                var moveToInitial = centerView.Left < 0;
-                leaveBehindLayout.StartScrollAnimation(child, ClampMoveRight(child, left), !moveToInitial, true);
-                return true;
-            }
-
-            if (leftView == null)
-            {
-                leaveBehindLayout.StartScrollAnimation(child, child.Left - centerView.Left, false, true);
-                return true;
-            }
-
-            var lp = (LeaveBehindLayoutParameters)leftView.LayoutParameters;
-
-            if (dx > 0 && xVelocity >= 0 && LeftViewClampReached(lp))
-            {
-                // ...
-                // leaveBehindLayout.ClampReached?.Invoke(this, new SwipeEventArgs { MoveRight = true });
-                return true;
-            }
-
-            if (dx > 0 && xVelocity >= 0 && lp.BringToClamp != (int)LeaveBehindLayoutBringToClamp.No && leftView.Right > lp.BringToClamp)
-            {
-                int left = centerView.Left < 0 ? child.Left - centerView.Left : Width;
-                leaveBehindLayout.StartScrollAnimation(child, ClampMoveRight(child, left), true, true);
-                return true;
-            }
-
-            if (lp.Stickiness != (int)LeaveBehindLayoutStickiness.None)
-            {
-                int stickyBound = lp.Stickiness == (int)LeaveBehindLayoutStickiness.Self
-                    ? leftView.Width
-                    : lp.Stickiness;
-
-                float amplitude = stickyBound * lp.StickinessSensitivity;
-
-                if (IsBetween(-amplitude, amplitude, centerView.Left - stickyBound))
-                {
-                    var toClamp = (lp.Clamp == (int)LeaveBehindLayoutClamp.Self && stickyBound == leftView.Width) ||
-                            lp.Clamp == stickyBound ||
-                            (lp.Clamp == (int)LeaveBehindLayoutClamp.Parent && stickyBound == Width);
-                    leaveBehindLayout.StartScrollAnimation(child, child.Left - centerView.Left + stickyBound, toClamp, true);
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool OnMoveLeftReleased(View child, int dx, float xvel)
-        {
-            var centerView = leaveBehindLayout.CenterView;
-            var rightView = leaveBehindLayout.RightView;
-
-            if (-xvel > leaveBehindLayout.VelocityThreshold)
-            {
-                int left = centerView.Left > 0 ? child.Left - centerView.Left : -Width;
-                var moveToOriginal = centerView.Left > 0;
-                leaveBehindLayout.StartScrollAnimation(child, ClampMoveLeft(child, left), !moveToOriginal, false);
-                return true;
-            }
-
-            if (rightView == null)
-            {
-                leaveBehindLayout.StartScrollAnimation(child, child.Left - centerView.Left, false, false);
-                return true;
-            }
-
-            var lp = (LeaveBehindLayoutParameters)rightView.LayoutParameters;
-
-            if (dx < 0 && xvel <= 0 && RightViewClampReached(lp))
-            {
-                // ...
-                // leaveBehindLayout.ClampReached?.Invoke(this, new SwipeEventArgs { MoveRight = false });
-                return true;
-            }
-
-            if (dx < 0 && xvel <= 0 && lp.BringToClamp != (int)LeaveBehindLayoutBringToClamp.No && rightView.Left + lp.BringToClamp < Width)
-            {
-                int left = centerView.Left > 0 ? child.Left - centerView.Left : -Width;
-                leaveBehindLayout.StartScrollAnimation(child, ClampMoveLeft(child, left), true, false);
-                return true;
-            }
-
-            if (lp.Stickiness != (int)LeaveBehindLayoutStickiness.None)
-            {
-                int stickyBound = lp.Stickiness == (int)LeaveBehindLayoutStickiness.Self
-                    ? rightView.Width
-                    : lp.Stickiness;
-
-                float amplitude = stickyBound * lp.StickinessSensitivity;
-
-                if (IsBetween(-amplitude, amplitude, centerView.Right + stickyBound - Width))
-                {
-                    var toClamp = (lp.Clamp == (int)LeaveBehindLayoutClamp.Self && stickyBound == rightView.Width) ||
-                            lp.Clamp == stickyBound ||
-                            (lp.Clamp == (int)LeaveBehindLayoutClamp.Parent && stickyBound == Width);
-                    leaveBehindLayout.StartScrollAnimation(child, child.Left - rightView.Left + Width - stickyBound, toClamp, false);
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool IsBetween(float left, float right, float check)
-        {
-            return check >= left && check <= right;
-        }
+        public bool IsSwipedRight { get; set; }
     }
 
     public class LeaveBehindLayout : ViewGroup
@@ -392,11 +57,11 @@ namespace Xamarin.Android.LeaveBehind.Library
 
         public event EventHandler<SwipeEventArgs> SwipeStarted;
 
-        public event EventHandler<SwipeEventArgs> ClampReached;
+        public event EventHandler<SwipeEventArgs> Clamped;
 
-        public event EventHandler<SwipeEventArgs> LeftStickyEdgeReached;
+        public event EventHandler<SwipeEventArgs> LeftViewSticked;
 
-        public event EventHandler<SwipeEventArgs> RightStickyEdgeReached;
+        public event EventHandler<SwipeEventArgs> RightViewSticked;
 
 
         public LeaveBehindLayout(Context context, IAttributeSet attrs) : base(context, attrs)
@@ -404,7 +69,7 @@ namespace Xamarin.Android.LeaveBehind.Library
             VelocityThreshold = TypedValue.ApplyDimension(ComplexUnitType.Dip, 1500f, Resources.DisplayMetrics);
             TouchSlop = ViewConfiguration.Get(context).ScaledTouchSlop;
 
-            var viewDragHelperCallback = new LeaveBehindLayoutDragCallback(this);
+            var viewDragHelperCallback = new DragCallback(this);
             ViewDragHelper = ViewDragHelper.Create(this, 1.0f, viewDragHelperCallback);
         }
 
@@ -449,7 +114,9 @@ namespace Xamarin.Android.LeaveBehind.Library
             }
         }
 
-        public IEnumerable<View> Children()
+        #region Enumerators
+
+        private IEnumerable<View> Children()
         {
             var childCount = ChildCount;
             for (var i = 0; i < childCount; i++)
@@ -458,7 +125,7 @@ namespace Xamarin.Android.LeaveBehind.Library
             }
         }
 
-        public IEnumerable<IViewParent> Parents()
+        private IEnumerable<IViewParent> Parents()
         {
             var parent = Parent;
             while (parent != null)
@@ -467,6 +134,8 @@ namespace Xamarin.Android.LeaveBehind.Library
                 parent = parent.Parent;
             }
         }
+
+        #endregion
 
 
         protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
@@ -511,13 +180,13 @@ namespace Xamarin.Android.LeaveBehind.Library
                 var layoutParameters = (LeaveBehindLayoutParameters)child.LayoutParameters;
                 switch (layoutParameters.Gravity)
                 {
-                    case LeaveBehindLayoutGravity.Left:
+                    case Gravity.Left:
                         LeftView = child;
                         break;
-                    case LeaveBehindLayoutGravity.Center:
+                    case Gravity.Center:
                         CenterView = child;
                         break;
-                    case LeaveBehindLayoutGravity.Right:
+                    case Gravity.Right:
                         RightView = child;
                         break;
                 }
@@ -528,10 +197,10 @@ namespace Xamarin.Android.LeaveBehind.Library
                 throw new NullReferenceException("Surface view is missing.");
             }
 
+            var childTop = PaddingTop;
             foreach (var child in Children().Where(x => x.Visibility != ViewStates.Gone))
             {
                 var childLeft = GetChildLeft(child);
-                var childTop = GetChildTop(child);
                 child.Layout(childLeft, childTop, childLeft + child.MeasuredWidth, childTop + child.MeasuredHeight);
             }
 
@@ -540,16 +209,14 @@ namespace Xamarin.Android.LeaveBehind.Library
                 var layoutParameters = (LeaveBehindLayoutParameters)child.LayoutParameters;
                 switch (layoutParameters.Gravity)
                 {
-                    case LeaveBehindLayoutGravity.Left:
+                    case Gravity.Left:
                         return CenterView.Left - child.MeasuredWidth;
-                    case LeaveBehindLayoutGravity.Right:
+                    case Gravity.Right:
                         return CenterView.Right;
                     default:
                         return child.Left;
                 }
             }
-
-            int GetChildTop(View child) => PaddingTop;
         }
 
         public void OffsetChildren(View skip, int dx)
@@ -566,49 +233,18 @@ namespace Xamarin.Android.LeaveBehind.Library
             }
         }
 
-        class SettleRunnable : Java.Lang.Object, IRunnable
+        public void StartScrollAnimation(View view, int finalLeft, bool isClamped, bool isSwipedRight)
         {
-            private LeaveBehindLayout leaveBehindLayout;
-            private View view;
-            private bool moveToClamp;
-            private bool moveToRight;
-
-            public SettleRunnable(LeaveBehindLayout leaveBehindLayout, View view, bool moveToClamp, bool moveToRight)
+            if (ViewDragHelper.SettleCapturedViewAt(finalLeft, view.Top))
             {
-                this.leaveBehindLayout = leaveBehindLayout;
-                this.view = view;
-                this.moveToClamp = moveToClamp;
-                this.moveToRight = moveToRight;
+                ViewCompat.PostOnAnimation(view, new SettleRunnable(this, view, isClamped, isSwipedRight));
             }
-
-            public void Run()
+            else if (isClamped)
             {
-                if (leaveBehindLayout.ViewDragHelper != null && leaveBehindLayout.ViewDragHelper.ContinueSettling(true))
+                Clamped?.Invoke(this, new SwipeEventArgs
                 {
-                    ViewCompat.PostOnAnimation(view, this);
-                }
-                else
-                {
-                    if (moveToClamp)
-                    {
-                        leaveBehindLayout.ClampReached?.Invoke(leaveBehindLayout, new SwipeEventArgs { MoveRight = moveToRight });
-                    }
-                }
-            }
-        }
-
-        public void StartScrollAnimation(View view, int targetX, bool moveToClamp, bool moveToRight)
-        {
-            if (ViewDragHelper.SettleCapturedViewAt(targetX, view.Top))
-            {
-                ViewCompat.PostOnAnimation(view, new SettleRunnable(this, view, moveToClamp, moveToRight));
-            }
-            else
-            {
-                if (moveToClamp)
-                {
-                    ClampReached?.Invoke(this, new SwipeEventArgs { MoveRight = moveToRight });
-                }
+                    IsSwipedRight = isSwipedRight
+                });
             }
         }
 
@@ -687,7 +323,7 @@ namespace Xamarin.Android.LeaveBehind.Library
                                 RequestDisallowInterceptTouchEvent(true);
 
                                 SaveNestedScrollingParentsState();
-                                SwipeStarted?.Invoke(this, new SwipeEventArgs { MoveRight = ev.GetX() > touchX });
+                                SwipeStarted?.Invoke(this, new SwipeEventArgs { IsSwipedRight = ev.GetX() > touchX });
                             }
                         }
                     }
@@ -728,5 +364,342 @@ namespace Xamarin.Android.LeaveBehind.Library
             => p is LeaveBehindLayoutParameters;
 
         #endregion
+
+
+        class SettleRunnable : Java.Lang.Object, IRunnable
+        {
+            private LeaveBehindLayout _layout;
+            private View _view;
+            private bool _isClamped;
+            private bool _isSwipedRight;
+
+            public SettleRunnable(LeaveBehindLayout layout, View view, bool isClamped, bool isSwipedRight)
+            {
+                _layout = layout;
+                _view = view;
+                _isClamped = isClamped;
+                _isSwipedRight = isSwipedRight;
+            }
+
+            public void Run()
+            {
+                if (_layout.ViewDragHelper.ContinueSettling(true))
+                {
+                    ViewCompat.PostOnAnimation(_view, this);
+                }
+                else if (_isClamped)
+                {
+                    _layout.Clamped?.Invoke(_layout, new SwipeEventArgs
+                    {
+                        IsSwipedRight = _isSwipedRight
+                    });
+                }
+            }
+        }
+
+
+        class DragCallback : ViewDragHelper.Callback
+        {
+            private int _initialLeft;
+            private LeaveBehindLayout _leaveBehindLayout;
+
+            private int ParentWidth => _leaveBehindLayout.Width;
+
+            private View CenterView => _leaveBehindLayout.CenterView;
+            private View LeftView => _leaveBehindLayout.LeftView;
+            private View RightView => _leaveBehindLayout.RightView;
+
+
+            public DragCallback(LeaveBehindLayout leaveBehindLayout)
+                => _leaveBehindLayout = leaveBehindLayout;
+
+
+            #region ViewDragHelper.Callback
+
+            public override bool TryCaptureView(View child, int pointerId)
+            {
+                _initialLeft = child.Left;
+                return true;
+            }
+
+            public override int ClampViewPositionHorizontal(View child, int left, int dx)
+                => (dx > 0) ? ClampMoveRight(child, left) : ClampMoveLeft(child, left);
+
+            public override int GetViewHorizontalDragRange(View child) => ParentWidth;
+
+            public override void OnViewReleased(View releasedChild, float xVelocity, float yVelocity)
+            {
+                int dx = releasedChild.Left - _initialLeft;
+                if (dx == 0)
+                {
+                    return;
+                }
+
+                var isSwipedRight = dx > 0;
+                var handled = TryHandleViewRelease();
+
+                if (!handled)
+                {
+                    var finalLeft = releasedChild.Left - CenterView.Left;
+                    _leaveBehindLayout.StartScrollAnimation(releasedChild, finalLeft, isClamped: false, isSwipedRight: isSwipedRight);
+                }
+
+                bool TryHandleViewRelease()
+                {
+                    if (isSwipedRight)
+                    {
+                        return xVelocity >= 0 ? OnRightSwipeReleased(releasedChild, dx, xVelocity) : OnLeftSwipeReleased(releasedChild, dx, xVelocity);
+                    }
+                    else
+                    {
+                        return xVelocity <= 0 ? OnLeftSwipeReleased(releasedChild, dx, xVelocity) : OnRightSwipeReleased(releasedChild, dx, xVelocity);
+                    }
+                }
+            }
+
+            public override void OnViewPositionChanged(View changedView, int left, int top, int dx, int dy)
+            {
+                if (dx == 0)
+                {
+                    return;
+                }
+
+                _leaveBehindLayout.OffsetChildren(changedView, dx);
+
+                var isSwipedRight = dx > 0;
+
+                if (LeftView != null)
+                {
+                    var leftViewLayoutParameters = (LeaveBehindLayoutParameters)LeftView.LayoutParameters;
+                    if (leftViewLayoutParameters.TryGetStickingPoint(LeftView.Width, out var stickingPoint))
+                    {
+                        if (isSwipedRight)
+                        {
+                            if (LeftView.Right - stickingPoint > 0 && LeftView.Right - stickingPoint - dx <= 0)
+                            {
+                                _leaveBehindLayout.LeftViewSticked?.Invoke(this, new SwipeEventArgs { IsSwipedRight = true });
+                            }
+                        }
+                        else
+                        {
+                            if (LeftView.Right - stickingPoint <= 0 && LeftView.Right - stickingPoint - dx > 0)
+                            {
+                                _leaveBehindLayout.LeftViewSticked?.Invoke(this, new SwipeEventArgs { IsSwipedRight = false });
+                            }
+                        }
+                    }
+                }
+
+                if (RightView != null)
+                {
+                    var rightViewLayoutParameters = (LeaveBehindLayoutParameters)RightView.LayoutParameters;
+                    if (rightViewLayoutParameters.TryGetStickingPoint(RightView.Width, out var stickingPoint))
+                    {
+                        if (isSwipedRight)
+                        {
+                            if (RightView.Left + stickingPoint > ParentWidth && RightView.Left + stickingPoint - dx <= ParentWidth)
+                            {
+                                _leaveBehindLayout.RightViewSticked?.Invoke(this, new SwipeEventArgs { IsSwipedRight = true });
+                            }
+                        }
+                        else
+                        {
+                            if (RightView.Left + stickingPoint <= ParentWidth && RightView.Left + stickingPoint - dx > ParentWidth)
+                            {
+                                _leaveBehindLayout.RightViewSticked?.Invoke(this, new SwipeEventArgs { IsSwipedRight = false });
+                            }
+                        }
+                    }
+                }
+            }
+
+            #endregion
+
+
+            private bool IsLeftViewClamped(LeaveBehindLayoutParameters layoutParameters)
+            {
+                if (LeftView == null)
+                {
+                    return false;
+                }
+
+                switch (layoutParameters.ClampingPoint)
+                {
+                    case (int)ClampingPoint.Parent:
+                        return LeftView.Right >= ParentWidth;
+                    case (int)ClampingPoint.This:
+                        return LeftView.Right >= LeftView.Width;
+                    default:
+                        return LeftView.Right >= layoutParameters.ClampingPoint;
+                }
+            }
+
+            private bool IsRightViewClamped(LeaveBehindLayoutParameters layoutParameters)
+            {
+                if (RightView == null)
+                {
+                    return false;
+                }
+
+                switch (layoutParameters.ClampingPoint)
+                {
+                    case (int)ClampingPoint.Parent:
+                        return RightView.Right <= ParentWidth;
+                    case (int)ClampingPoint.This:
+                        return RightView.Right <= RightView.Width;
+                    default:
+                        return RightView.Left + layoutParameters.ClampingPoint <= ParentWidth;
+                }
+            }
+
+            private int ClampMoveRight(View child, int left)
+            {
+                if (LeftView == null)
+                {
+                    return (child == CenterView) ? Math.Min(left, 0) : Math.Min(left, ParentWidth);
+                }
+
+                var layoutParameters = child.LayoutParameters as LeaveBehindLayoutParameters;
+                switch (layoutParameters.ClampingPoint)
+                {
+                    case (int)ClampingPoint.Parent:
+                        return Math.Min(left, ParentWidth + child.Left - LeftView.Right);
+                    case (int)ClampingPoint.This:
+                        return Math.Min(left, child.Left - LeftView.Left);
+                    default:
+                        return Math.Min(left, child.Left - LeftView.Right + layoutParameters.ClampingPoint);
+                }
+            }
+
+            private int ClampMoveLeft(View child, int left)
+            {
+                if (RightView == null)
+                {
+                    return (child == CenterView) ? Math.Max(left, 0) : Math.Max(left, -child.Width);
+                }
+
+                var layoutParameters = child.LayoutParameters as LeaveBehindLayoutParameters;
+                switch (layoutParameters.ClampingPoint)
+                {
+                    case (int)ClampingPoint.Parent:
+                        return Math.Max(child.Left - RightView.Left, left);
+                    case (int)ClampingPoint.This:
+                        return Math.Max(left, ParentWidth - RightView.Left + child.Left - RightView.Width);
+                    default:
+                        return Math.Max(left, ParentWidth - RightView.Left + child.Left - layoutParameters.ClampingPoint);
+                }
+
+            }
+
+            private bool OnRightSwipeReleased(View child, int dx, float xVelocity)
+            {
+                if (xVelocity > _leaveBehindLayout.VelocityThreshold)
+                {
+                    var left = (CenterView.Left < 0) ? child.Left - CenterView.Left : ParentWidth;
+                    var moveToInitialPosition = CenterView.Left < 0;
+                    StartScrollAnimation(ClampMoveRight(child, left), isClamped: !moveToInitialPosition);
+                    return true;
+                }
+
+                if (LeftView == null)
+                {
+                    StartScrollAnimation(child.Left - CenterView.Left, isClamped: false);
+                    return true;
+                }
+
+                var layoutParameters = (LeaveBehindLayoutParameters)LeftView.LayoutParameters;
+
+                if (dx > 0 && xVelocity >= 0 && IsLeftViewClamped(layoutParameters))
+                {
+                    _leaveBehindLayout.Clamped?.Invoke(this, new SwipeEventArgs { IsSwipedRight = true });
+                    return true;
+                }
+
+                if (dx > 0 && xVelocity >= 0 && layoutParameters.ClampingPointEpsilon != (int)ClampingPointEpsilon.None && LeftView.Right > layoutParameters.ClampingPointEpsilon)
+                {
+                    int left = CenterView.Left < 0 ? child.Left - CenterView.Left : ParentWidth;
+                    StartScrollAnimation(ClampMoveRight(child, left), isClamped: true);
+                    return true;
+                }
+
+                if (layoutParameters.TryGetStickingPoint(RightView.Width, out var stickingPoint))
+                {
+                    var amplitude = stickingPoint * layoutParameters.StickingPointEpsilon;
+                    if (IsBetween(-amplitude, amplitude, CenterView.Left - stickingPoint))
+                    {
+                        var isClamped = layoutParameters.ClampingPoint == (int)ClampingPoint.This && stickingPoint == LeftView.Width
+                            || layoutParameters.ClampingPoint == stickingPoint
+                            || layoutParameters.ClampingPoint == (int)ClampingPoint.Parent && stickingPoint == ParentWidth;
+
+                        StartScrollAnimation(child.Left - CenterView.Left + stickingPoint, isClamped: isClamped);
+                        return true;
+                    }
+                }
+
+                return false;
+
+
+                void StartScrollAnimation(int finalLeft, bool isClamped)
+                    => _leaveBehindLayout.StartScrollAnimation(child, finalLeft, isClamped, isSwipedRight: true);
+            }
+
+            private bool OnLeftSwipeReleased(View child, int dx, float xVelocity)
+            {
+                if (-xVelocity > _leaveBehindLayout.VelocityThreshold)
+                {
+                    var left = CenterView.Left > 0 ? child.Left - CenterView.Left : -ParentWidth;
+                    var moveToOriginalPosition = CenterView.Left > 0;
+
+                    StartScrollAnimation(ClampMoveLeft(child, left), isClamped: !moveToOriginalPosition);
+                    return true;
+                }
+
+                if (RightView == null)
+                {
+                    StartScrollAnimation(child.Left - CenterView.Left, false);
+                    return true;
+                }
+
+                var layoutParameters = (LeaveBehindLayoutParameters)RightView.LayoutParameters;
+
+                if (dx < 0 && xVelocity <= 0 && IsRightViewClamped(layoutParameters))
+                {
+                    _leaveBehindLayout.Clamped?.Invoke(this, new SwipeEventArgs { IsSwipedRight = false });
+                    return true;
+                }
+
+                if (dx < 0 && xVelocity <= 0 && layoutParameters.ClampingPointEpsilon != (int)ClampingPointEpsilon.None && RightView.Left + layoutParameters.ClampingPointEpsilon < ParentWidth)
+                {
+                    int left = CenterView.Left > 0 ? child.Left - CenterView.Left : -ParentWidth;
+                    StartScrollAnimation(ClampMoveLeft(child, left), true);
+                    return true;
+                }
+
+                if (layoutParameters.TryGetStickingPoint(RightView.Width, out var stickingPoint))
+                {
+                    float amplitude = stickingPoint * layoutParameters.StickingPointEpsilon;
+                    if (IsBetween(-amplitude, amplitude, CenterView.Right + stickingPoint - ParentWidth))
+                    {
+                        var isClamped = layoutParameters.ClampingPoint == (int)ClampingPoint.This && stickingPoint == RightView.Width
+                            || layoutParameters.ClampingPoint == stickingPoint
+                            || layoutParameters.ClampingPoint == (int)ClampingPoint.Parent && stickingPoint == ParentWidth;
+
+                        StartScrollAnimation(child.Left - RightView.Left + ParentWidth - stickingPoint, isClamped);
+                        return true;
+                    }
+                }
+
+                return false;
+
+
+                void StartScrollAnimation(int finalLeft, bool isClamped)
+                    => _leaveBehindLayout.StartScrollAnimation(child, finalLeft, isClamped, isSwipedRight: false);
+            }
+
+            private bool IsBetween(float left, float right, float check)
+            {
+                return check >= left && check <= right;
+            }
+        }
     }
 }
