@@ -24,7 +24,7 @@ namespace Xamarin.Android.LeaveBehind.Library
 
     public class LeaveBehindLayout : ViewGroup
     {
-        private WeakReference<ObjectAnimator> resetAnimator;
+        private WeakReference<ObjectAnimator> _resetAnimator;
 
 
         public ViewDragHelper ViewDragHelper { get; }
@@ -88,7 +88,7 @@ namespace Xamarin.Android.LeaveBehind.Library
                 animator.SetDuration(200);
                 animator.Start();
 
-                resetAnimator = new WeakReference<ObjectAnimator>(animator);
+                _resetAnimator = new WeakReference<ObjectAnimator>(animator);
             }
             else
             {
@@ -97,14 +97,14 @@ namespace Xamarin.Android.LeaveBehind.Library
 
             void FinishResetAnimator()
             {
-                if (resetAnimator == null)
+                if (_resetAnimator == null)
                 {
                     return;
                 }
 
-                if (resetAnimator.TryGetTarget(out var animator))
+                if (_resetAnimator.TryGetTarget(out var animator))
                 {
-                    resetAnimator.SetTarget(null);
+                    _resetAnimator.SetTarget(null);
 
                     if (animator.IsRunning)
                     {
@@ -226,11 +226,11 @@ namespace Xamarin.Android.LeaveBehind.Library
         }
 
 
-        private List<(View view, bool state)> nestedScrollingParents = new List<(View view, bool state)>();
+        private List<(View view, bool state)> _nestedScrollingParents = new List<(View view, bool state)>();
 
         private void SaveNestedScrollingParentsState()
         {
-            nestedScrollingParents = Parents()
+            _nestedScrollingParents = Parents()
                 .Where(x => x is INestedScrollingParent)
                 .Select(x => (view: (View)x, state: ((View)x).Enabled))
                 .ToList();
@@ -238,28 +238,32 @@ namespace Xamarin.Android.LeaveBehind.Library
 
         private void RestoreNestedScrollingParentsState()
         {
-            if (nestedScrollingParents == null)
+            if (_nestedScrollingParents == null)
             {
                 return;
             }
+            var nestedScrollingParents = _nestedScrollingParents;
+            _nestedScrollingParents = null;
 
             foreach (var (view, state) in nestedScrollingParents)
             {
                 view.Enabled = state;
             }
-
-            nestedScrollingParents = null;
         }
 
         public override bool OnInterceptTouchEvent(MotionEvent ev)
             => IsSwipeEnabled ? ViewDragHelper.ShouldInterceptTouchEvent(ev) : base.OnInterceptTouchEvent(ev);
 
 
-        private static int TOUCH_STATE_WAIT = 0;
-        private static int TOUCH_STATE_SWIPE = 1;
-        private static int TOUCH_STATE_SKIP = 2;
+        enum TouchState
+        {
+            Wait = 0,
+            Swipe = 1,
+            Skip = 2
+        }
 
-        private int touchState = TOUCH_STATE_WAIT;
+        private TouchState touchState = TouchState.Wait;
+
         private float touchX;
         private float touchY;
 
@@ -275,12 +279,12 @@ namespace Xamarin.Android.LeaveBehind.Library
             switch (ev.ActionMasked)
             {
                 case MotionEventActions.Down:
-                    touchState = TOUCH_STATE_WAIT;
+                    touchState = TouchState.Wait;
                     touchX = ev.GetX();
                     touchY = ev.GetY();
                     break;
                 case MotionEventActions.Move:
-                    if (touchState == TOUCH_STATE_WAIT)
+                    if (touchState == TouchState.Wait)
                     {
                         float dx = Math.Abs(ev.GetX() - touchX);
                         float dy = Math.Abs(ev.GetY() - touchY);
@@ -294,8 +298,8 @@ namespace Xamarin.Android.LeaveBehind.Library
 
                         if (dx >= TouchSlop || dy >= TouchSlop)
                         {
-                            touchState = dy == 0 || dx / dy > 1f ? TOUCH_STATE_SWIPE : TOUCH_STATE_SKIP;
-                            if (touchState == TOUCH_STATE_SWIPE)
+                            touchState = dy == 0 || dx / dy > 1f ? TouchState.Swipe : TouchState.Skip;
+                            if (touchState == TouchState.Swipe)
                             {
                                 RequestDisallowInterceptTouchEvent(true);
 
@@ -307,16 +311,16 @@ namespace Xamarin.Android.LeaveBehind.Library
                     break;
                 case MotionEventActions.Cancel:
                 case MotionEventActions.Up:
-                    if (touchState == TOUCH_STATE_SWIPE)
+                    if (touchState == TouchState.Swipe)
                     {
                         RestoreNestedScrollingParentsState();
                         RequestDisallowInterceptTouchEvent(false);
                     }
-                    touchState = TOUCH_STATE_WAIT;
+                    touchState = TouchState.Wait;
                     break;
             }
 
-            if (ev.ActionMasked != MotionEventActions.Move || touchState == TOUCH_STATE_SWIPE)
+            if (ev.ActionMasked != MotionEventActions.Move || touchState == TouchState.Swipe)
             {
                 ViewDragHelper.ProcessTouchEvent(ev);
             }
