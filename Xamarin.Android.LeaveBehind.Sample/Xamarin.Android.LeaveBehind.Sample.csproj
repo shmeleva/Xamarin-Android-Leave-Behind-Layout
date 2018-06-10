@@ -76,6 +76,12 @@
     <Folder Include="Assets\" />
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Xamarin.Android.LeaveBehind.Library\Xamarin.Android.LeaveBehind.Library.csproj">
+      <Project>{c01cef0b-2209-438d-bb4b-daf92c4f9894}</Project>
+      <Name>Xamarin.Android.LeaveBehind.Library</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 		Other similar extension points exist, see Microsoft.Common.targets.

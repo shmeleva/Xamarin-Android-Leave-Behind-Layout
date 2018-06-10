@@ -1,7 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
-              android:orientation="vertical" 
-              android:layout_width="match_parent" 
-              android:layout_height="match_parent">
+<Xamarin.Android.LeaveBehind.Library.LeaveBehindLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    >
 
-</LinearLayout>
+  <RelativeLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:layout_width="match_parent"
+      android:layout_height="80dp"
+      android:background="#00FF00"
+      android:clickable="true"
+      >
+
+  </RelativeLayout>
+
+
+  <!--RIGHT-->
+  <LinearLayout
+      android:layout_width="144dp"
+      android:layout_height="80dp"
+      android:orientation="horizontal"
+      android:background="#FF0000"
+      android:clickable="true"
+      android:focusable="true"
+      app:gravity="right"
+      app:bringToClamp="72dp"
+      app:clamp="144dp"
+      app:stickiness="72dp"
+      >
+
+  </LinearLayout>
+
+  <!--LEFT-->
+  <FrameLayout
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      app:gravity="left"
+      app:bringToClamp="0dp"
+      app:clamp="0dp"
+      app:stickiness="0dp"
+      >
+
+  </FrameLayout>
+
+</Xamarin.Android.LeaveBehind.Library.LeaveBehindLayout>

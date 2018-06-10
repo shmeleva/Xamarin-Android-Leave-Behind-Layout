@@ -17,6 +17,17 @@ namespace Xamarin.Android.LeaveBehind.Library
         Self = -1
     }
 
+    public enum LeaveBehindLayoutClamp
+    {
+        Self = -2,
+        Parent = -1
+    }
+
+    public enum LeaveBehindLayoutBringToClamp
+    {
+        No = -1
+    }
+
 
     public class LeaveBehindLayoutParameters : ViewGroup.LayoutParams
     {
@@ -25,7 +36,10 @@ namespace Xamarin.Android.LeaveBehind.Library
         public int Stickiness { get; }
         public float StickinessSensitivity { get; }
 
-        public bool SwipeEnabled { get; }
+        public int Clamp { get; }
+        public int BringToClamp { get; }
+
+        //public bool SwipeEnabled { get; }
 
 
         public LeaveBehindLayoutParameters(ViewGroup.LayoutParams source) : base(source)
@@ -41,7 +55,10 @@ namespace Xamarin.Android.LeaveBehind.Library
             Stickiness = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_stickiness, (int)LeaveBehindLayoutStickiness.Self);
             StickinessSensitivity = styledAttributes.GetFloat(Resource.Styleable.LeaveBehindLayout_stickinessSensitivity, 0.9f);
 
-            SwipeEnabled = styledAttributes.GetBoolean(Resource.Styleable.LeaveBehindLayout_swipeEnabled, true);
+            Clamp = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_clamp, (int)LeaveBehindLayoutClamp.Self);
+            BringToClamp = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_bringToClamp, (int)LeaveBehindLayoutBringToClamp.No);
+
+            //SwipeEnabled = styledAttributes.GetBoolean(Resource.Styleable.LeaveBehindLayout_swipeEnabled, true);
 
             styledAttributes.Recycle();
         }

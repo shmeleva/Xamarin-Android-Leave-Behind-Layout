@@ -1,16 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="LeaveBehindLayout">
+      
         <attr name="gravity">
             <enum name="left" value="-1" />
             <enum name="center" value="0" />
             <enum name="right" value="1" />
         </attr>
-        <attr name="stickiness" format="dimension">
+      
+        <attr name="stickiness" format="dimension"> <!-- sticky -->
             <enum name="none" value="-2" />
             <enum name="self" value="-1" />
         </attr>
-        <attr name="stickinessSensitivity" format="float" />
-        <attr name="swipeEnabled" format="boolean" />
+        <attr name="stickinessSensitivity" format="float" /> <!-- sticky_sensitivity -->
+
+        <attr name="clamp" format="dimension">
+          <enum name="parent" value="-1" />
+          <enum name="self" value="-2" />
+        </attr>
+
+        <attr name="bringToClamp" format="dimension"> <!-- bring_to_clamp -->
+          <enum name="no" value="-1"/>
+        </attr>
+
+      <attr name="swipeEnabled" format="boolean" /> <!-- swipe_enabled -->
+      <attr name="leftSwipeEnabled" format="boolean"/> <!-- left_swipe_enabled -->
+      <attr name="rightSwipeEnabled" format="boolean"/> <!-- right_swipe_enabled -->
+
+      
+      
+<!--      <attr name="stickiness" format="dimension">
+        <enum name="this" value="-2" />
+        <enum name="none" value="-1" />
+      </attr>
+      <attr name="stickiness_epsilon" format="dimension" />
+
+      <attr name="clamping" format="dimension">
+        <enum name="parent" value="-3" />
+        <enum name="this" value="-2" />
+      </attr>
+      <attr name="clamping_epsilon" format="dimension" />-->
+      
     </declare-styleable>
 </resources>
