@@ -159,12 +159,14 @@ namespace Xamarin.Android.LeaveBehind.Library
                 {
                     case Gravity.Left:
                         LeftView = child;
+                        IsLeftSwipeEnabled = layoutParameters.SwipeEnabled;
                         break;
                     case Gravity.Center:
                         CenterView = child;
                         break;
                     case Gravity.Right:
                         RightView = child;
+                        IsRightSwipeEnabled = layoutParameters.SwipeEnabled;
                         break;
                 }
             }

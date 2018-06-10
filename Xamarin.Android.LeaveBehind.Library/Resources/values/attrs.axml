@@ -23,9 +23,7 @@
           <enum name="none" value="-3" />
         </attr>
 
-      <attr name="swipeEnabled" format="boolean" /> <!-- swipe_enabled -->
-      <attr name="leftSwipeEnabled" format="boolean"/> <!-- left_swipe_enabled -->
-      <attr name="rightSwipeEnabled" format="boolean"/> <!-- right_swipe_enabled -->
+      <attr name="swipeEnabled" format="boolean" />
       
     </declare-styleable>
 </resources>

@@ -42,7 +42,7 @@ namespace Xamarin.Android.LeaveBehind.Library
 
         public bool ClampingPointEpsilonDefined => ClampingPointEpsilon != (int)Library.ClampingPointEpsilon.None;
 
-        //public bool SwipeEnabled { get; }
+        public bool SwipeEnabled { get; }
 
 
         public LeaveBehindLayoutParameters(ViewGroup.LayoutParams source) : base(source)
@@ -61,7 +61,7 @@ namespace Xamarin.Android.LeaveBehind.Library
             ClampingPoint = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_clampingPoint, (int)Library.ClampingPoint.This);
             ClampingPointEpsilon = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_clampingPointEpsilon, (int)Library.ClampingPointEpsilon.None);
 
-            //SwipeEnabled = styledAttributes.GetBoolean(Resource.Styleable.LeaveBehindLayout_swipeEnabled, true);
+            SwipeEnabled = styledAttributes.GetBoolean(Resource.Styleable.LeaveBehindLayout_swipeEnabled, true);
 
             styledAttributes.Recycle();
         }
