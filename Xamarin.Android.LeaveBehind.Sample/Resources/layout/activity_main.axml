@@ -31,20 +31,22 @@
       app:clampingPoint="144dp"
       app:stickingPoint="72dp"
       app:stickingPointEpsilon="36dp"
+      app:swipeEnabled="true"
       >
 
   </LinearLayout>
 
   <!--LEFT-->
-  <FrameLayout
+  <!--<FrameLayout
       android:layout_width="0dp"
       android:layout_height="match_parent"
       app:gravity="left"
       app:clampingPointEpsilon="0dp"
       app:clampingPoint="0dp"
       app:stickingPoint="0dp"
+      app:swipeEnabled="false"
       >
 
-  </FrameLayout>
+  </FrameLayout>-->
 
 </Xamarin.Android.LeaveBehind.Library.LeaveBehindLayout>

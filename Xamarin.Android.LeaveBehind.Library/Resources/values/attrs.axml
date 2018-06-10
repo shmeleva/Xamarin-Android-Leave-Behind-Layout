@@ -10,12 +10,12 @@
       
         <attr name="stickingPoint" format="dimension">
             <enum name="none" value="-3" />
-            <enum name="this" value="-2" />
+            <enum name="view" value="-2" />
         </attr>
         <attr name="stickingPointEpsilon" format="dimension" />
 
         <attr name="clampingPoint" format="dimension">
-          <enum name="this" value="-2" />
+          <enum name="view" value="-2" />
           <enum name="parent" value="-1" />
         </attr>
 

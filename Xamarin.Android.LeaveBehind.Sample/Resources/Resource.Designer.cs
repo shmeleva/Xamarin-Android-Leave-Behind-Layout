@@ -38,8 +38,6 @@ namespace Xamarin.Android.LeaveBehind.Sample
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.fontStyle = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.fontStyle;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.fontWeight = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.fontWeight;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.gravity = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.gravity;
-			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.leftSwipeEnabled = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.leftSwipeEnabled;
-			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.rightSwipeEnabled = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.rightSwipeEnabled;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.stickingPoint = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.stickingPoint;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.stickingPointEpsilon = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.stickingPointEpsilon;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Attribute.swipeEnabled = global::Xamarin.Android.LeaveBehind.Sample.Resource.Attribute.swipeEnabled;
@@ -97,7 +95,6 @@ namespace Xamarin.Android.LeaveBehind.Sample
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Id.left = global::Xamarin.Android.LeaveBehind.Sample.Resource.Id.left;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Id.line1 = global::Xamarin.Android.LeaveBehind.Sample.Resource.Id.line1;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Id.line3 = global::Xamarin.Android.LeaveBehind.Sample.Resource.Id.line3;
-			global::Xamarin.Android.LeaveBehind.Library.Resource.Id.no = global::Xamarin.Android.LeaveBehind.Sample.Resource.Id.no;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Id.none = global::Xamarin.Android.LeaveBehind.Sample.Resource.Id.none;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Id.normal = global::Xamarin.Android.LeaveBehind.Sample.Resource.Id.normal;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Id.notification_background = global::Xamarin.Android.LeaveBehind.Sample.Resource.Id.notification_background;
@@ -107,12 +104,12 @@ namespace Xamarin.Android.LeaveBehind.Sample
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Id.right = global::Xamarin.Android.LeaveBehind.Sample.Resource.Id.right;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Id.right_icon = global::Xamarin.Android.LeaveBehind.Sample.Resource.Id.right_icon;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Id.right_side = global::Xamarin.Android.LeaveBehind.Sample.Resource.Id.right_side;
-			global::Xamarin.Android.LeaveBehind.Library.Resource.Id.self = global::Xamarin.Android.LeaveBehind.Sample.Resource.Id.self;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Id.tag_transition_group = global::Xamarin.Android.LeaveBehind.Sample.Resource.Id.tag_transition_group;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Id.text = global::Xamarin.Android.LeaveBehind.Sample.Resource.Id.text;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Id.text2 = global::Xamarin.Android.LeaveBehind.Sample.Resource.Id.text2;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Id.time = global::Xamarin.Android.LeaveBehind.Sample.Resource.Id.time;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Id.title = global::Xamarin.Android.LeaveBehind.Sample.Resource.Id.title;
+			global::Xamarin.Android.LeaveBehind.Library.Resource.Id.view = global::Xamarin.Android.LeaveBehind.Sample.Resource.Id.view;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Integer.status_bar_notification_info_maxnum = global::Xamarin.Android.LeaveBehind.Sample.Resource.Integer.status_bar_notification_info_maxnum;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Layout.notification_action = global::Xamarin.Android.LeaveBehind.Sample.Resource.Layout.notification_action;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Layout.notification_action_tombstone = global::Xamarin.Android.LeaveBehind.Sample.Resource.Layout.notification_action_tombstone;
@@ -146,8 +143,6 @@ namespace Xamarin.Android.LeaveBehind.Sample
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout_clampingPoint = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout_clampingPoint;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout_clampingPointEpsilon = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout_clampingPointEpsilon;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout_gravity = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout_gravity;
-			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout_leftSwipeEnabled = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout_leftSwipeEnabled;
-			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout_rightSwipeEnabled = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout_rightSwipeEnabled;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout_stickingPoint = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout_stickingPoint;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout_stickingPointEpsilon = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout_stickingPointEpsilon;
 			global::Xamarin.Android.LeaveBehind.Library.Resource.Styleable.LeaveBehindLayout_swipeEnabled = global::Xamarin.Android.LeaveBehind.Sample.Resource.Styleable.LeaveBehindLayout_swipeEnabled;
@@ -191,12 +186,6 @@ namespace Xamarin.Android.LeaveBehind.Sample
 			
 			// aapt resource value: 0x7f010009
 			public const int gravity = 2130771977;
-			
-			// aapt resource value: 0x7f01000f
-			public const int leftSwipeEnabled = 2130771983;
-			
-			// aapt resource value: 0x7f010010
-			public const int rightSwipeEnabled = 2130771984;
 			
 			// aapt resource value: 0x7f01000a
 			public const int stickingPoint = 2130771978;
@@ -383,20 +372,20 @@ namespace Xamarin.Android.LeaveBehind.Sample
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0a0012
-			public const int action_container = 2131361810;
+			// aapt resource value: 0x7f0a0011
+			public const int action_container = 2131361809;
 			
-			// aapt resource value: 0x7f0a001e
-			public const int action_divider = 2131361822;
+			// aapt resource value: 0x7f0a001d
+			public const int action_divider = 2131361821;
+			
+			// aapt resource value: 0x7f0a0012
+			public const int action_image = 2131361810;
 			
 			// aapt resource value: 0x7f0a0013
-			public const int action_image = 2131361811;
+			public const int action_text = 2131361811;
 			
-			// aapt resource value: 0x7f0a0014
-			public const int action_text = 2131361812;
-			
-			// aapt resource value: 0x7f0a001f
-			public const int actions = 2131361823;
+			// aapt resource value: 0x7f0a001e
+			public const int actions = 2131361822;
 			
 			// aapt resource value: 0x7f0a0006
 			public const int async = 2131361798;
@@ -407,20 +396,20 @@ namespace Xamarin.Android.LeaveBehind.Sample
 			// aapt resource value: 0x7f0a000b
 			public const int center = 2131361803;
 			
-			// aapt resource value: 0x7f0a001d
-			public const int chronometer = 2131361821;
+			// aapt resource value: 0x7f0a001c
+			public const int chronometer = 2131361820;
 			
 			// aapt resource value: 0x7f0a0008
 			public const int forever = 2131361800;
 			
-			// aapt resource value: 0x7f0a0016
-			public const int icon = 2131361814;
+			// aapt resource value: 0x7f0a0015
+			public const int icon = 2131361813;
 			
-			// aapt resource value: 0x7f0a0020
-			public const int icon_group = 2131361824;
+			// aapt resource value: 0x7f0a001f
+			public const int icon_group = 2131361823;
 			
-			// aapt resource value: 0x7f0a0019
-			public const int info = 2131361817;
+			// aapt resource value: 0x7f0a0018
+			public const int info = 2131361816;
 			
 			// aapt resource value: 0x7f0a0009
 			public const int italic = 2131361801;
@@ -434,23 +423,20 @@ namespace Xamarin.Android.LeaveBehind.Sample
 			// aapt resource value: 0x7f0a0001
 			public const int line3 = 2131361793;
 			
-			// aapt resource value: 0x7f0a0011
-			public const int no = 2131361809;
-			
 			// aapt resource value: 0x7f0a000e
 			public const int none = 2131361806;
 			
 			// aapt resource value: 0x7f0a000a
 			public const int normal = 2131361802;
 			
-			// aapt resource value: 0x7f0a001b
-			public const int notification_background = 2131361819;
+			// aapt resource value: 0x7f0a001a
+			public const int notification_background = 2131361818;
 			
-			// aapt resource value: 0x7f0a0017
-			public const int notification_main_column = 2131361815;
+			// aapt resource value: 0x7f0a0016
+			public const int notification_main_column = 2131361814;
 			
-			// aapt resource value: 0x7f0a0015
-			public const int notification_main_column_container = 2131361813;
+			// aapt resource value: 0x7f0a0014
+			public const int notification_main_column_container = 2131361812;
 			
 			// aapt resource value: 0x7f0a0010
 			public const int parent = 2131361808;
@@ -458,14 +444,11 @@ namespace Xamarin.Android.LeaveBehind.Sample
 			// aapt resource value: 0x7f0a000d
 			public const int right = 2131361805;
 			
-			// aapt resource value: 0x7f0a001a
-			public const int right_icon = 2131361818;
+			// aapt resource value: 0x7f0a0019
+			public const int right_icon = 2131361817;
 			
-			// aapt resource value: 0x7f0a0018
-			public const int right_side = 2131361816;
-			
-			// aapt resource value: 0x7f0a000f
-			public const int self = 2131361807;
+			// aapt resource value: 0x7f0a0017
+			public const int right_side = 2131361815;
 			
 			// aapt resource value: 0x7f0a0002
 			public const int tag_transition_group = 2131361794;
@@ -476,11 +459,14 @@ namespace Xamarin.Android.LeaveBehind.Sample
 			// aapt resource value: 0x7f0a0004
 			public const int text2 = 2131361796;
 			
-			// aapt resource value: 0x7f0a001c
-			public const int time = 2131361820;
+			// aapt resource value: 0x7f0a001b
+			public const int time = 2131361819;
 			
 			// aapt resource value: 0x7f0a0005
 			public const int title = 2131361797;
+			
+			// aapt resource value: 0x7f0a000f
+			public const int view = 2131361807;
 			
 			static Id()
 			{
@@ -675,9 +661,7 @@ namespace Xamarin.Android.LeaveBehind.Sample
 					2130771979,
 					2130771980,
 					2130771981,
-					2130771982,
-					2130771983,
-					2130771984};
+					2130771982};
 			
 			// aapt resource value: 3
 			public const int LeaveBehindLayout_clampingPoint = 3;
@@ -687,12 +671,6 @@ namespace Xamarin.Android.LeaveBehind.Sample
 			
 			// aapt resource value: 0
 			public const int LeaveBehindLayout_gravity = 0;
-			
-			// aapt resource value: 6
-			public const int LeaveBehindLayout_leftSwipeEnabled = 6;
-			
-			// aapt resource value: 7
-			public const int LeaveBehindLayout_rightSwipeEnabled = 7;
 			
 			// aapt resource value: 1
 			public const int LeaveBehindLayout_stickingPoint = 1;

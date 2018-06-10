@@ -48,11 +48,11 @@ namespace Xamarin.Android.LeaveBehind.Library
         }
         
 
-        public bool IsLeftSwipeEnabled { get; set; } = true;
+        public bool IsRightViewSwipeEnabled => ((LeaveBehindLayoutParameters)RightView?.LayoutParameters)?.SwipeEnabled ?? false;
 
-        public bool IsRightSwipeEnabled { get; set; } = true;
+        public bool IsLeftViewSwipeEnabled => ((LeaveBehindLayoutParameters)LeftView?.LayoutParameters)?.SwipeEnabled ?? false;
 
-        public bool IsSwipeEnabled => IsLeftSwipeEnabled || IsRightSwipeEnabled;
+        public bool IsSwipeEnabled => IsRightViewSwipeEnabled || IsLeftViewSwipeEnabled;
 
 
         public event EventHandler<SwipeEventArgs> SwipeStarted;
@@ -159,14 +159,12 @@ namespace Xamarin.Android.LeaveBehind.Library
                 {
                     case Gravity.Left:
                         LeftView = child;
-                        IsLeftSwipeEnabled = layoutParameters.SwipeEnabled;
                         break;
                     case Gravity.Center:
                         CenterView = child;
                         break;
                     case Gravity.Right:
                         RightView = child;
-                        IsRightSwipeEnabled = layoutParameters.SwipeEnabled;
                         break;
                 }
             }
@@ -293,7 +291,7 @@ namespace Xamarin.Android.LeaveBehind.Library
 
                         bool isLeftToRight = (ev.GetX() - touchX) > 0;
 
-                        if ((isLeftToRight && !IsLeftSwipeEnabled) || (!isLeftToRight && !IsRightSwipeEnabled))
+                        if ((isLeftToRight && !IsRightViewSwipeEnabled) || (!isLeftToRight && !IsLeftViewSwipeEnabled))
                         {
                             return defaultResult;
                         }

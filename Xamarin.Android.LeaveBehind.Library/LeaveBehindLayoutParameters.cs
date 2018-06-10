@@ -56,10 +56,16 @@ namespace Xamarin.Android.LeaveBehind.Library
             Gravity = (Gravity)styledAttributes.GetInt(Resource.Styleable.LeaveBehindLayout_gravity, (int)Gravity.Center);
 
             StickingPoint = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_stickingPoint, (int)Library.StickingPoint.This);
+            ValidateStickingPoint();
+
             StickingPointEpsilon = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_stickingPointEpsilon, 0);
+            ValidateStickingPointEpsilon();
 
             ClampingPoint = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_clampingPoint, (int)Library.ClampingPoint.This);
+            ValidateClampingPoint();
+
             ClampingPointEpsilon = (int)styledAttributes.GetDimension(Resource.Styleable.LeaveBehindLayout_clampingPointEpsilon, (int)Library.ClampingPointEpsilon.None);
+            ValidateClampingPointEpsilon();
 
             SwipeEnabled = styledAttributes.GetBoolean(Resource.Styleable.LeaveBehindLayout_swipeEnabled, true);
 
@@ -86,9 +92,41 @@ namespace Xamarin.Android.LeaveBehind.Library
             }
         }
 
-        public int GetClampingPoint()
+
+        private void ValidateStickingPoint()
         {
-            throw new NotImplementedException();
+            if (StickingPoint >= 0 || Enum.IsDefined(typeof(StickingPoint), StickingPoint))
+            {
+                return;
+            }
+            throw new ArgumentException(nameof(StickingPoint));
+        }
+
+        private void ValidateStickingPointEpsilon()
+        {
+            if (StickingPointEpsilon >= 0)
+            {
+                return;
+            }
+            throw new ArgumentException(nameof(StickingPointEpsilon));
+        }
+
+        private void ValidateClampingPoint()
+        {
+            if (ClampingPoint >= 0 || Enum.IsDefined(typeof(ClampingPoint), ClampingPoint))
+            {
+                return;
+            }
+            throw new ArgumentException(nameof(ClampingPoint));
+        }
+
+        private void ValidateClampingPointEpsilon()
+        {
+            if (ClampingPointEpsilon >= 0 || Enum.IsDefined(typeof(ClampingPointEpsilon), ClampingPointEpsilon))
+            {
+                return;
+            }
+            throw new ArgumentException(nameof(ClampingPointEpsilon));
         }
     }
 }
