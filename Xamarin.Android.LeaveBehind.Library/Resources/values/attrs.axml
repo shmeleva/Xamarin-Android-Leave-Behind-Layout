@@ -9,37 +9,23 @@
         </attr>
       
         <attr name="stickingPoint" format="dimension">
-            <enum name="none" value="-2" />
-            <enum name="self" value="-1" />
+            <enum name="none" value="-3" />
+            <enum name="this" value="-2" />
         </attr>
         <attr name="stickingPointEpsilon" format="dimension" />
 
         <attr name="clampingPoint" format="dimension">
+          <enum name="this" value="-2" />
           <enum name="parent" value="-1" />
-          <enum name="self" value="-2" />
         </attr>
 
         <attr name="clampingPointEpsilon" format="dimension">
-          <enum name="no" value="-1"/>
+          <enum name="none" value="-3" />
         </attr>
 
       <attr name="swipeEnabled" format="boolean" /> <!-- swipe_enabled -->
       <attr name="leftSwipeEnabled" format="boolean"/> <!-- left_swipe_enabled -->
       <attr name="rightSwipeEnabled" format="boolean"/> <!-- right_swipe_enabled -->
-
-      
-      
-<!--      <attr name="stickiness" format="dimension">
-        <enum name="this" value="-2" />
-        <enum name="none" value="-1" />
-      </attr>
-      <attr name="stickiness_epsilon" format="dimension" />
-
-      <attr name="clamping" format="dimension">
-        <enum name="parent" value="-3" />
-        <enum name="this" value="-2" />
-      </attr>
-      <attr name="clamping_epsilon" format="dimension" />-->
       
     </declare-styleable>
 </resources>

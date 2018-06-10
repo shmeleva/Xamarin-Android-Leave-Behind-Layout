@@ -14,8 +14,8 @@ namespace Xamarin.Android.LeaveBehind.Library
 
     public enum StickingPoint
     {
-        None = -2,
-        This = -1
+        None = -3,
+        This = -2
     }
 
     public enum ClampingPoint
@@ -26,7 +26,7 @@ namespace Xamarin.Android.LeaveBehind.Library
 
     public enum ClampingPointEpsilon
     {
-        None = -1
+        None = -3
     }
 
 
