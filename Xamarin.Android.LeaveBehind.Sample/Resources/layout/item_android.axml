@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Xamarin.Android.LeaveBehind.Library.LeaveBehindLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:background="#FFFFFF"
+      android:padding="16dp"
+      app:gravity="center"
+      >
+    
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Brunch this weekend?"
+          android:textColor="#000000"
+          style="@style/Base.TextAppearance.AppCompat.Subhead"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Ali Connors"
+          android:textColor="#000000"
+          style="@style/Base.TextAppearance.AppCompat.Caption"
+          />
+
+  </LinearLayout>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="#0A8043"
+      app:gravity="right"
+      app:clampingPoint="parent"
+      app:clampingPointEpsilon="256dp"
+      app:stickingPoint="none"
+      app:swipeEnabled="true"
+      >
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/round_archive_white_24"
+        />
+
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="#0A8043"
+      app:gravity="left"
+      app:clampingPoint="parent"
+      app:clampingPointEpsilon="256dp"
+      app:stickingPoint="none"
+      app:swipeEnabled="true"
+      >
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/round_archive_white_24"
+        />
+  
+  </RelativeLayout>
+
+</Xamarin.Android.LeaveBehind.Library.LeaveBehindLayout>

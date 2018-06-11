@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Xamarin.Android.LeaveBehind.Library.LeaveBehindLayout
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#AAAAAA"
+    >
+  
+    <include
+        layout="@layout/item_android"
+        />
+
+    <include
+        layout="@layout/item_ios"
+        />
+  
+</LinearLayout>
+
+<!--<Xamarin.Android.LeaveBehind.Library.LeaveBehindLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -16,7 +35,6 @@
   </RelativeLayout>
 
 
-  <!--RIGHT-->
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -31,7 +49,6 @@
 
   </LinearLayout>
 
-  <!--LEFT-->
   <FrameLayout
       android:layout_width="144dp"
       android:layout_height="match_parent"
@@ -45,4 +62,4 @@
 
   </FrameLayout>
 
-</Xamarin.Android.LeaveBehind.Library.LeaveBehindLayout>
+</Xamarin.Android.LeaveBehind.Library.LeaveBehindLayout>-->
