@@ -531,7 +531,7 @@ namespace Xamarin.Android.LeaveBehind.Library
                 {
                     case (int)ClampingPoint.Parent:
                         return LeftView.Right >= ParentWidth;
-                    case (int)ClampingPoint.This:
+                    case (int)ClampingPoint.View:
                         return LeftView.Right >= LeftView.Width;
                     default:
                         return LeftView.Right >= layoutParameters.ClampingPoint;
@@ -549,7 +549,7 @@ namespace Xamarin.Android.LeaveBehind.Library
                 {
                     case (int)ClampingPoint.Parent:
                         return RightView.Right <= ParentWidth;
-                    case (int)ClampingPoint.This:
+                    case (int)ClampingPoint.View:
                         return RightView.Right <= RightView.Width;
                     default:
                         return RightView.Left + layoutParameters.ClampingPoint <= ParentWidth;
@@ -568,7 +568,7 @@ namespace Xamarin.Android.LeaveBehind.Library
                 {
                     case (int)ClampingPoint.Parent:
                         return Math.Min(left, ParentWidth + child.Left - LeftView.Right);
-                    case (int)ClampingPoint.This:
+                    case (int)ClampingPoint.View:
                         return Math.Min(left, child.Left - LeftView.Left);
                     default:
                         return Math.Min(left, child.Left - LeftView.Right + layoutParameters.ClampingPoint);
@@ -587,7 +587,7 @@ namespace Xamarin.Android.LeaveBehind.Library
                 {
                     case (int)ClampingPoint.Parent:
                         return Math.Max(child.Left - RightView.Left, left);
-                    case (int)ClampingPoint.This:
+                    case (int)ClampingPoint.View:
                         return Math.Max(left, ParentWidth - RightView.Left + child.Left - RightView.Width);
                     default:
                         return Math.Max(left, ParentWidth - RightView.Left + child.Left - layoutParameters.ClampingPoint);
@@ -613,24 +613,28 @@ namespace Xamarin.Android.LeaveBehind.Library
 
                 var layoutParameters = (LeaveBehindLayoutParameters)LeftView.LayoutParameters;
 
-                if (dx > 0 && xVelocity >= 0 && IsLeftViewClamped(layoutParameters))
+                if (dx > 0 && xVelocity >= 0)
                 {
-                    _leaveBehindLayout.Clamped?.Invoke(this, new SwipeEventArgs { IsSwipedRight = true });
-                    return true;
-                }
+                    if (IsLeftViewClamped(layoutParameters))
+                    {
+                        _leaveBehindLayout.Clamped?.Invoke(this, new SwipeEventArgs { IsSwipedRight = true });
+                        return true;
+                    }
 
-                if (dx > 0 && xVelocity >= 0 && layoutParameters.ClampingPointEpsilonDefined && LeftView.Right > layoutParameters.ClampingPoint - layoutParameters.ClampingPointEpsilon)
-                {
-                    int left = CenterView.Left < 0 ? child.Left - CenterView.Left : ParentWidth;
-                    StartScrollAnimation(ClampMoveRight(child, left), isClamped: true);
-                    return true;
+                    var clampingPoint = layoutParameters.GetClampingPoint(LeftView.Width, ParentWidth);
+                    if (layoutParameters.ClampingPointEpsilonDefined && LeftView.Right > clampingPoint - layoutParameters.ClampingPointEpsilon)
+                    {
+                        int left = CenterView.Left < 0 ? child.Left - CenterView.Left : ParentWidth;
+                        StartScrollAnimation(ClampMoveRight(child, left), isClamped: true);
+                        return true;
+                    }
                 }
 
                 if (layoutParameters.TryGetStickingPoint(RightView.Width, out var stickingPoint))
                 {
                     if (IsInEpsilonNeighbourhood(CenterView.Left - stickingPoint, layoutParameters.StickingPointEpsilon))
                     {
-                        var isClamped = layoutParameters.ClampingPoint == (int)ClampingPoint.This && stickingPoint == LeftView.Width
+                        var isClamped = layoutParameters.ClampingPoint == (int)ClampingPoint.View && stickingPoint == LeftView.Width
                             || layoutParameters.ClampingPoint == stickingPoint
                             || layoutParameters.ClampingPoint == (int)ClampingPoint.Parent && stickingPoint == ParentWidth;
 
@@ -665,24 +669,28 @@ namespace Xamarin.Android.LeaveBehind.Library
 
                 var layoutParameters = (LeaveBehindLayoutParameters)RightView.LayoutParameters;
 
-                if (dx < 0 && xVelocity <= 0 && IsRightViewClamped(layoutParameters))
+                if (dx < 0 && xVelocity <= 0)
                 {
-                    _leaveBehindLayout.Clamped?.Invoke(this, new SwipeEventArgs { IsSwipedRight = false });
-                    return true;
-                }
+                    if (IsRightViewClamped(layoutParameters))
+                    {
+                        _leaveBehindLayout.Clamped?.Invoke(this, new SwipeEventArgs { IsSwipedRight = false });
+                        return true;
+                    }
 
-                if (dx < 0 && xVelocity <= 0 && layoutParameters.ClampingPointEpsilonDefined && RightView.Left + layoutParameters.ClampingPoint - layoutParameters.ClampingPointEpsilon < ParentWidth)
-                {
-                    int left = CenterView.Left > 0 ? child.Left - CenterView.Left : -ParentWidth;
-                    StartScrollAnimation(ClampMoveLeft(child, left), true);
-                    return true;
+                    var clampingPoint = layoutParameters.GetClampingPoint(RightView.Width, ParentWidth);
+                    if (layoutParameters.ClampingPointEpsilonDefined && RightView.Left + clampingPoint - layoutParameters.ClampingPointEpsilon < ParentWidth)
+                    {
+                        int left = CenterView.Left > 0 ? child.Left - CenterView.Left : -ParentWidth;
+                        StartScrollAnimation(ClampMoveLeft(child, left), true);
+                        return true;
+                    }
                 }
 
                 if (layoutParameters.TryGetStickingPoint(RightView.Width, out var stickingPoint))
                 {
                     if (IsInEpsilonNeighbourhood(CenterView.Right + stickingPoint - ParentWidth, layoutParameters.StickingPointEpsilon))
                     {
-                        var isClamped = layoutParameters.ClampingPoint == (int)ClampingPoint.This && stickingPoint == RightView.Width
+                        var isClamped = layoutParameters.ClampingPoint == (int)ClampingPoint.View && stickingPoint == RightView.Width
                             || layoutParameters.ClampingPoint == stickingPoint
                             || layoutParameters.ClampingPoint == (int)ClampingPoint.Parent && stickingPoint == ParentWidth;
 

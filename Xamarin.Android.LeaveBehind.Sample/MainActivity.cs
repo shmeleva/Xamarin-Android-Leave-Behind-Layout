@@ -3,7 +3,7 @@ using Android.OS;
 
 namespace Xamarin.Android.LeaveBehind.Sample
 {
-    [Activity(Label = "Xamarin.Android.LeaveBehind.Sample", MainLauncher = true, Icon = "@mipmap/icon")]
+    [Activity(Label = "Xamarin.Android.LeaveBehind.Sample", MainLauncher = true)]
     public class MainActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)

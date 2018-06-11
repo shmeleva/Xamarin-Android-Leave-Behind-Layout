@@ -7,8 +7,6 @@
     >
 
   <RelativeLayout
-      xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
       android:layout_width="match_parent"
       android:layout_height="80dp"
       android:background="#00FF00"
@@ -20,15 +18,12 @@
 
   <!--RIGHT-->
   <LinearLayout
-      android:layout_width="144dp"
-      android:layout_height="80dp"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
       android:orientation="horizontal"
-      android:background="#FF0000"
-      android:clickable="true"
-      android:focusable="true"
       app:gravity="right"
-      app:clampingPointEpsilon="12dp"
-      app:clampingPoint="144dp"
+      app:clampingPointEpsilon="228dp"
+      app:clampingPoint="view"
       app:stickingPoint="72dp"
       app:stickingPointEpsilon="36dp"
       app:swipeEnabled="true"
@@ -37,16 +32,17 @@
   </LinearLayout>
 
   <!--LEFT-->
-  <!--<FrameLayout
-      android:layout_width="0dp"
+  <FrameLayout
+      android:layout_width="144dp"
       android:layout_height="match_parent"
       app:gravity="left"
-      app:clampingPointEpsilon="0dp"
-      app:clampingPoint="0dp"
-      app:stickingPoint="0dp"
-      app:swipeEnabled="false"
+      app:clampingPointEpsilon="228dp"
+      app:clampingPoint="parent"
+      app:stickingPoint="72dp"
+      app:stickingPointEpsilon="36dp"
+      app:swipeEnabled="true"
       >
 
-  </FrameLayout>-->
+  </FrameLayout>
 
 </Xamarin.Android.LeaveBehind.Library.LeaveBehindLayout>
